@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour
 {
     public float detectionRange;
 
-    public GameObject[] towers;
+    public List<GameObject> towers;
     public List<GameObject> champs;
     public List<GameObject> minions;
 
@@ -24,13 +24,16 @@ public class EnemyAI : MonoBehaviour
     {
         champs = new List<GameObject>();
         minions = new List<GameObject>();
+        towers = new List<GameObject>();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
+        GetTowersToTarget();
         GetAllInRange();
         ConstructBehaviourTree();
         topNode.Evaluate();
+        //towers.Clear();
     }
 
     void GetAllInRange()
@@ -60,15 +63,30 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    void GetTowersToTarget()
+    {
+        GameObject[] t = GameObject.FindGameObjectsWithTag("Tower");
+
+        foreach(var target in t)
+        {
+            if (target.GetComponent<Role>().teamType != GetComponent<Role>().teamType)
+            {
+                if (towers.IndexOf(target) < 0)
+                    towers.Add(target);
+            }
+        }
+
+    }
+
     private void ConstructBehaviourTree()
     {
         InRangeNode minionsInRange = new InRangeNode(detectionRange, minions.ToArray(), transform);
         InRangeNode champsInRange = new InRangeNode(detectionRange, champs.ToArray(), transform);
-        InRangeNode towersInRange = new InRangeNode(detectionRange, towers, transform);
+        InRangeNode towersInRange = new InRangeNode(detectionRange, towers.ToArray(), transform);
         AttackTartgetNode attackMinions = new AttackTartgetNode(minions.ToArray(), gameObject);
         AttackTartgetNode attackChamps = new AttackTartgetNode(champs.ToArray(), gameObject);
         Inverter towerInRangeInverter = new Inverter(towersInRange);
-        GotoTower gotoTower = new GotoTower(towers, gameObject);
+        GotoTower gotoTower = new GotoTower(towers.ToArray(), gameObject);
 
         Sequence attackMinionSeg = new Sequence(new List<Node> { minionsInRange, towerInRangeInverter, attackMinions});
         Sequence attackChampSeg = new Sequence(new List<Node> { champsInRange, attackChamps});

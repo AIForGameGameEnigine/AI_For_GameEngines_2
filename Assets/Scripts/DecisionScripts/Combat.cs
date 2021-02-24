@@ -50,7 +50,16 @@ public class Combat : MonoBehaviour
             {
                 if (performMeleeAttack)
                 {
+                   
                     StartCoroutine(MeleeAttackInterval());
+                }
+            }
+
+            if(attackType == AttackType.Ranged)
+            {
+                if(GetComponent<Role>().roleType == Role.RoleType.Tower)
+                {
+                    RangedAttack();
                 }
             }
         }
@@ -58,7 +67,11 @@ public class Combat : MonoBehaviour
 
     IEnumerator MeleeAttackInterval()
     {
-        if(performMeleeAttack)
+        Vector3 direction = (targetedEnemy.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, direction.y, direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 100f);
+
+        if (performMeleeAttack)
             anim.speed = 1 + (statsScript.atkSpd * 0.02f);
         performMeleeAttack = false;
         anim.SetBool("Basic Attack", true);
@@ -91,5 +104,25 @@ public class Combat : MonoBehaviour
         }
 
         performMeleeAttack = true;
+    }
+
+    public void RangedAttack()
+    {
+        if(targetedEnemy != null)
+        {
+            Stats targetStats = targetedEnemy.GetComponent<Stats>();
+            Role targetRole = targetedEnemy.GetComponent<Role>();
+            Role HeroRole = gameObject.GetComponent<Role>();
+
+            if (targetRole.teamType != HeroRole.teamType)
+            {
+                targetStats.Health -= statsScript.atkDmg;
+
+                if (targetStats.Health <= 0)
+                    statsScript.Exp += targetStats.expOnDeath;
+            }
+        }
+
+        targetedEnemy = null;
     }
 }

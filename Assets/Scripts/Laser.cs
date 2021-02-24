@@ -37,7 +37,8 @@ public class Laser : MonoBehaviour
         lineRenderer.SetPosition(0, transform.position);
         RaycastHit hit;
 
-        if(Physics.Raycast(transform.position, transform.forward, out hit) && (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Floor")))
+        if(Physics.Raycast(transform.position, transform.forward, out hit) 
+            /*&& (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Enemy") || hit.collider.CompareTag("Floor"))*/)
         {
             if(hit.collider)
             {

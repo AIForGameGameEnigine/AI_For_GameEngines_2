@@ -44,20 +44,28 @@ public class TargetDetection : MonoBehaviour
         if(targets.Count > 0)
         {
             target = targets[0];
+
+            if (target == null)
+                targets.Remove(target);
         }
+
+        
     }
 
     public void fire()
     {
-        if(target != null && target.GetComponent<Collider>().GetComponent<HealthBar>() != null)
+        if(target != null)
         {
-            target.GetComponent<Collider>().GetComponent<HealthBar>().ChangeHealth(-damage);
+            GetComponent<Combat>().targetedEnemy = target.gameObject;
+        }else
+        {
+            targets.Remove(target);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy") || other.CompareTag("Player"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Player"))
         {
             if (targets.Count == 0)
             {

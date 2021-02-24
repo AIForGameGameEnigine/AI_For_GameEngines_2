@@ -39,10 +39,10 @@ public class Stats : MonoBehaviour
 
         if(health <= 0)
         {
-            Destroy(gameObject);
             combatScript.targetedEnemy = null;
             combatScript.performMeleeAttack = false;
             combatScript.IsAlive = false;
+            Destroy(gameObject);
         }
     }
 

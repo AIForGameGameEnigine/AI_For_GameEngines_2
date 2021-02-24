@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Cover
   - Enemy
   - Floor
+  - AI
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - Floor
+  - 
   - 
   - 
   - 

@@ -16,7 +16,8 @@ public class Role : MonoBehaviour
     {
         Champion,
         Minion,
-        Tower
+        Tower,
+        Fountain
     }
 
     public RoleType roleType;
@@ -25,7 +26,8 @@ public class Role : MonoBehaviour
     {
         Top,
         Mid,
-        Bot
+        Bot,
+        Spawn
     };
 
     public LaneType lane;

@@ -788,7 +788,7 @@ GameObject:
   - component: {fileID: 1364544138}
   - component: {fileID: 1364544139}
   - component: {fileID: 2118223704}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TurtleShellPBR
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -869,8 +869,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 1774625739149480}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.7
-  m_Speed: 8
+  m_Radius: 0.2
+  m_Speed: 6
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 1200
@@ -894,7 +894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48e023ebb7aa444b8d90d3e5fe47ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamType: 1
+  teamType: 0
   roleType: 0
   lane: 0
 --- !u!114 &2118223699
@@ -915,6 +915,7 @@ MonoBehaviour:
   maxHealth: 50
   atkDmg: 2
   atkSpd: 0.8
+  shouldLvl: 1
 --- !u!114 &2118223700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -929,7 +930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   targetedEnemy: {fileID: 0}
-  attackRange: 3
+  attackRange: 6
   basicAttackIdle: 0
   performMeleeAttack: 1
 --- !u!114 &1364544138
@@ -957,7 +958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb3221551cdc1642829e180401c6adb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 25
+  detectionRange: 15
   towers:
   - {fileID: 0}
   - {fileID: 0}

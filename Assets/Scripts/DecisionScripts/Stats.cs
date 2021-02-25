@@ -13,6 +13,7 @@ public class Stats : MonoBehaviour
     public float atkDmg;
     public float atkSpd;
     private float atkTime = 1.4f;
+    public bool shouldLvl;
 
     Combat combatScript;
 
@@ -34,7 +35,7 @@ public class Stats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Exp >= expToNextLvl)
+        if (Exp >= expToNextLvl && shouldLvl)
             LevelUp();
 
         if(health <= 0)

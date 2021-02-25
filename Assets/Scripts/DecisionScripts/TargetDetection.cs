@@ -9,13 +9,21 @@ public class TargetDetection : MonoBehaviour
     private bool foundEnemy = false;
 
     public List<Transform> targets = new List<Transform>();
-    public float reloadTime = 2.0f;
-    public float damage = 10.0f;
+    public float reloadTime = 0.5f;
+    //public float damage = 10.0f;
     private float nextTime;
     public GameObject laser;
+    public float Range;
+
+    private void Start()
+    {
+        Physics.IgnoreLayerCollision(0, 7);
+    }
 
     void Update()
     {
+        GetAllInRange();
+
         if(target != null)
         {
             foundEnemy = true;
@@ -27,7 +35,7 @@ public class TargetDetection : MonoBehaviour
 
         if(foundEnemy)
         {
-            if (target.GetComponent<Collider>().GetComponent<HealthBar>() != null && target.GetComponent<Collider>().GetComponent<HealthBar>().currentHealth <= 0)
+            if (target.GetComponent<Stats>().Health <= 0)
             {
                 targets.Remove(target);
             }
@@ -36,7 +44,7 @@ public class TargetDetection : MonoBehaviour
 
             if(Time.time >= nextTime)
             {
-                Invoke("fire", 0.2f);
+                fire();
                 nextTime = Time.time + reloadTime;
             }
         }
@@ -63,52 +71,76 @@ public class TargetDetection : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void GetAllInRange()
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("Player"))
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, Range, 1 << LayerMask.NameToLayer("Targetable"));
+
+        targets.Clear();
+
+        foreach (var hitCollider in hitColliders)
         {
-            if (targets.Count == 0)
+            Role role = hitCollider.gameObject.GetComponent<Role>();
+            if (role != null)
             {
-                targets.Add(other.transform);
-            }
-            else
-            {
-                int idx = 0;
-
-                foreach (Transform target in targets)
+                if (role.teamType != GetComponent<Role>().teamType)
                 {
-                    if(target.tag == "Player" && idx == 0)
-                    {
-                        targets.Add(other.transform);
-                        return;
-                    }
-                    else if (target.tag == "Player" && idx > 0)
-                    {
-                        targets.Insert(idx, other.transform);
-                        return;
-                    }
+                    EnemyInRange(hitCollider);
+                }
+            }
+        }
 
-                    idx++;
+        if (targets.Count <= 0)
+        {
+            foundEnemy = false;
+            target = null;
+        }
+    }
+
+
+    private void EnemyInRange(Collider other)
+    {
+        if (targets.Count == 0)
+        {
+            targets.Add(other.transform);
+        }
+        else
+        {
+            int idx = 0;
+
+            foreach (Transform target in targets)
+            {
+                if(GetComponent<Role>().roleType == Role.RoleType.Champion && idx == 0)
+                {
+                    targets.Add(other.transform);
+                    return;
+                }
+                else if (GetComponent<Role>().roleType == Role.RoleType.Champion && idx > 0)
+                {
+                    targets.Insert(idx, other.transform);
+                    return;
                 }
 
-                targets.Add(other.transform);
+                idx++;
             }
+
+            targets.Add(other.transform);
         }
+        
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.CompareTag("Enemy") || other.CompareTag("Player"))
-        {
-            targets.Remove(other.transform);
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if(other.CompareTag("Enemy") || other.CompareTag("Player"))
+    //    {
+    //        targets.Remove(other.transform);
 
-            if(targets.Count <= 0)
-            {
-                foundEnemy = false;
-                target = null;
-            }
-        }
-    }
+    //        if(targets.Count <= 0)
+    //        {
+    //            foundEnemy = false;
+    //            target = null;
+    //        }
+    //    }
+    //}
 
     void FaceTarget()
     {

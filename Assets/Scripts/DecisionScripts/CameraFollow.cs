@@ -25,19 +25,23 @@ public class CameraFollow : MonoBehaviour
         //snap to player
         cameraOffeset = new Vector3(8.1f, 13, 0);
         Vector3 newpos = player.position + cameraOffeset;
-        transform.position = Vector3.Slerp(transform.position, newpos, smoothness);
+        transform.position =  newpos;
+
         camFov = Camera.main.fieldOfView;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+       
+
+
         // Change FOV
         mouseScrollInput = Input.GetAxis("Mouse ScrollWheel");
 
         camFov -= mouseScrollInput * zoomSpeed;
-        camFov = Mathf.Clamp(camFov, 40, 70);
+        camFov = Mathf.Clamp(camFov, 60, 90);
 
         Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, camFov, zoomSpeed);
 
@@ -47,11 +51,11 @@ public class CameraFollow : MonoBehaviour
 
         if (Input.mousePosition.y >= Screen.height - screenSizeThickness) //up
             pos.x -= camSpeed * Time.deltaTime;
-        if (Input.mousePosition.y <=  screenSizeThickness) // down
+        if (Input.mousePosition.y <= screenSizeThickness) // down
             pos.x += camSpeed * Time.deltaTime;
         if (Input.mousePosition.x >= Screen.width - screenSizeThickness)//right
             pos.z += camSpeed * Time.deltaTime;
-        if (Input.mousePosition.x <=  screenSizeThickness)//left
+        if (Input.mousePosition.x <= screenSizeThickness)//left
             pos.z -= camSpeed * Time.deltaTime;
 
         transform.position = pos;

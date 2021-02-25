@@ -33,7 +33,10 @@ public class EnemyAI : MonoBehaviour
         GetAllInRange();
         ConstructBehaviourTree();
         topNode.Evaluate();
-        //towers.Clear();
+
+        champs.Clear();
+        minions.Clear();
+        towers.Clear();
     }
 
     void GetAllInRange()
@@ -69,7 +72,8 @@ public class EnemyAI : MonoBehaviour
 
         foreach(var target in t)
         {
-            if (target.GetComponent<Role>().teamType != GetComponent<Role>().teamType)
+            if (target.GetComponent<Role>().teamType != GetComponent<Role>().teamType &&
+                target.GetComponent<Role>().lane == GetComponent<Role>().lane)
             {
                 if (towers.IndexOf(target) < 0)
                     towers.Add(target);
@@ -82,7 +86,7 @@ public class EnemyAI : MonoBehaviour
     {
         InRangeNode minionsInRange = new InRangeNode(detectionRange, minions.ToArray(), transform);
         InRangeNode champsInRange = new InRangeNode(detectionRange, champs.ToArray(), transform);
-        InRangeNode towersInRange = new InRangeNode(detectionRange, towers.ToArray(), transform);
+        InRangeNode towersInRange = new InRangeNode(GetComponent<Combat>().attackRange, towers.ToArray(), transform);
         AttackTartgetNode attackMinions = new AttackTartgetNode(minions.ToArray(), gameObject);
         AttackTartgetNode attackChamps = new AttackTartgetNode(champs.ToArray(), gameObject);
         Inverter towerInRangeInverter = new Inverter(towersInRange);

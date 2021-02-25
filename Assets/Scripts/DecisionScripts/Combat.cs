@@ -42,7 +42,8 @@ public class Combat : MonoBehaviour
 
     void GoToEnemy()
     {
-        if (Vector3.Distance(transform.position, targetedEnemy.transform.position) > attackRange)
+        if (Vector3.Distance(transform.position, targetedEnemy.transform.position) > attackRange && 
+            GetComponent<Role>().roleType != Role.RoleType.Tower)
             moveScript.MoveTo(targetedEnemy.transform.position, attackRange);
         else
         {
@@ -84,6 +85,14 @@ public class Combat : MonoBehaviour
             performMeleeAttack = true;
             anim.speed = 1;
         }
+    }
+
+    IEnumerator RangeAttackInterval()
+    {
+        RangedAttack();
+
+        yield return new WaitForSeconds(statsScript.AtkTime / ((100 + statsScript.AtkTime) * 0.01f));
+
     }
 
     public void MeleeAttack()

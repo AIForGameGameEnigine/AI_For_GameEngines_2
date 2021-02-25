@@ -22,12 +22,12 @@ public class AttackTartgetNode : Node
             if (distance <= origin.GetComponent<Combat>().attackRange)
             {
                 origin.GetComponent<Combat>().targetedEnemy = tar;
-                _nodeState = NodeState.RUNNING;
+                _nodeState = NodeState.SUCCESS;
                 return _nodeState;
             }
         }
 
-        _nodeState = NodeState.FAILURE;
+        _nodeState = NodeState.RUNNING;
         return _nodeState;
     }
 

@@ -19,6 +19,12 @@ public class InRangeNode : Node
     {
         foreach(var tar in targets)
         {
+            if (tar == null)
+            {
+                _nodeState = NodeState.FAILURE;
+                return _nodeState;
+            }
+
             float dist = Vector3.Distance(tar.transform.position, origin.position);
             _nodeState = dist < range ? NodeState.SUCCESS : NodeState.FAILURE;
 
@@ -26,6 +32,7 @@ public class InRangeNode : Node
                 return _nodeState;
         }
        
+        _nodeState = NodeState.FAILURE;
         return _nodeState;
     }
 }

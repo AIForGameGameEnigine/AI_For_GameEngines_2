@@ -16,7 +16,20 @@ public class GotoTower : Node
 
     public override NodeState Evaluate()
     {
+        if(towers.Length <= 0)
+        {
+            _nodeState = NodeState.FAILURE;
+            return _nodeState;
+        }
+
         var t = towers[0];
+
+        if(t == null)
+        {
+            _nodeState = NodeState.FAILURE;
+            return _nodeState;
+        }
+
         foreach(var tower in towers)
         {
             float dist1 = Vector3.Distance(origin.transform.position, tower.transform.position);

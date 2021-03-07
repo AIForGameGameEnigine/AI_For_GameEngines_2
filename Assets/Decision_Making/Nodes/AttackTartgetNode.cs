@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AttackTartgetNode : Node
@@ -15,19 +16,16 @@ public class AttackTartgetNode : Node
 
     public override NodeState Evaluate()
     {
-        foreach (var tar in targets)
+        if(targets.Length > 0)
         {
-            float distance = Vector3.Distance(tar.transform.position, origin.transform.position);
+            GameObject finalTarget = targets.Select(tar => tar).OrderByDescending(tar => tar.GetComponent<Stats>().Health).ToArray()[0];
 
-            if (distance <= origin.GetComponent<Combat>().attackRange)
-            {
-                origin.GetComponent<Combat>().targetedEnemy = tar;
-                _nodeState = NodeState.SUCCESS;
-                return _nodeState;
-            }
+            origin.GetComponent<Combat>().targetedEnemy = finalTarget;
+            _nodeState = NodeState.SUCCESS;
+            return _nodeState;
         }
 
-        _nodeState = NodeState.RUNNING;
+        _nodeState = NodeState.FAILURE;
         return _nodeState;
     }
 

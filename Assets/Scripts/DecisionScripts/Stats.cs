@@ -17,7 +17,7 @@ public class Stats : MonoBehaviour
 
     Combat combatScript;
 
-    public float Health { get => health; set => health = value; }
+    public float Health { get => health; set => health = value >= maxHealth ? maxHealth : value; }
     public float AtkTime { get => atkTime; }
     public float Exp { get => exp; set => exp = value; }
 

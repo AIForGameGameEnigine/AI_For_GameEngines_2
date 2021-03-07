@@ -38,13 +38,20 @@ public class GotoTower : Node
             if(dist1 < dist2)
             {
                 t = tower;
-            }
+            } 
         }
 
         float distance = Vector3.Distance(origin.transform.position, t.transform.position);
 
         if (distance > origin.GetComponent<Combat>().attackRange)
         {
+            if (t.GetComponent<Role>().teamType == origin.GetComponent<Role>().teamType)
+            {
+                origin.GetComponent<Movement>().MoveTo(t.transform.position);
+                _nodeState = NodeState.RUNNING;
+                return _nodeState;
+            }
+
             origin.GetComponent<Combat>().targetedEnemy = t;
             _nodeState = NodeState.RUNNING;
             return _nodeState;

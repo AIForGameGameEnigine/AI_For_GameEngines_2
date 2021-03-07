@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class HeroAI : MonoBehaviour
 {
     public float detectionRange;
 
@@ -14,13 +13,13 @@ public class EnemyAI : MonoBehaviour
     public List<GameObject> allys;
     public int groupSize = 3;
 
-    private NavMeshAgent agent;
+    private UnityEngine.AI.NavMeshAgent agent;
     private Selector topNode;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
     private void Start()
@@ -50,14 +49,14 @@ public class EnemyAI : MonoBehaviour
         foreach (var hitCollider in hitColliders)
         {
             Role role = hitCollider.gameObject.GetComponent<Role>();
-            if(role != null)
+            if (role != null)
             {
                 if (role.teamType != GetComponent<Role>().teamType)
                 {
                     switch (role.roleType)
                     {
                         case Role.RoleType.Champion:
-                            if(champs.IndexOf(hitCollider.gameObject) < 0)
+                            if (champs.IndexOf(hitCollider.gameObject) < 0)
                                 champs.Add(hitCollider.gameObject);
                             break;
                         case Role.RoleType.Minion:
@@ -65,7 +64,8 @@ public class EnemyAI : MonoBehaviour
                                 minions.Add(hitCollider.gameObject);
                             break;
                     }
-                }else
+                }
+                else
                 {
                     switch (role.roleType)
                     {
@@ -77,7 +77,7 @@ public class EnemyAI : MonoBehaviour
                     }
                 }
             }
-           
+
         }
     }
 
@@ -85,7 +85,7 @@ public class EnemyAI : MonoBehaviour
     {
         GameObject[] t = GameObject.FindGameObjectsWithTag("Tower");
 
-        foreach(var target in t)
+        foreach (var target in t)
         {
             if (target.GetComponent<Role>().teamType != GetComponent<Role>().teamType &&
                 target.GetComponent<Role>().lane == GetComponent<Role>().lane)
@@ -133,6 +133,8 @@ public class EnemyAI : MonoBehaviour
         Sequence regroupSeg = new Sequence(new List<Node> { inGroupInverter, gotoOwnTower });
 
 
-        topNode = new Selector(new List<Node> {targetChampSeg, targetkMinionSeg, targetTowerSeg, regroupSeg});
+        topNode = new Selector(new List<Node> { targetChampSeg, targetkMinionSeg, targetTowerSeg, regroupSeg });
     }
 }
+
+

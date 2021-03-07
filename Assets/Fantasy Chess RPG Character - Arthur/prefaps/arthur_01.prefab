@@ -3219,6 +3219,7 @@ GameObject:
   - component: {fileID: 1361614997}
   - component: {fileID: 1361614998}
   - component: {fileID: 1361614999}
+  - component: {fileID: 2503865839029482876}
   m_Layer: 0
   m_Name: arthur_01
   m_TagString: Player
@@ -3314,7 +3315,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5930651934574334247}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.1
+  m_Radius: 1
   m_Speed: 10
   m_Acceleration: 100
   avoidancePriority: 50
@@ -3391,6 +3392,25 @@ MonoBehaviour:
   teamType: 0
   roleType: 0
   lane: 0
+--- !u!114 &2503865839029482876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5930651934574334247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54d63951d16efa84fa4b5b3148d50f83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 30
+  towers: []
+  allyTowers: []
+  champs: []
+  minions: []
+  allys: []
+  groupSize: 1
 --- !u!1 &5930651934574334249
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,10 +8,10 @@ public class SteeredCohesion : FlockBehaviour
     Vector3 currentVelocity;
     public float agentSmoothTime = 0.5f;
 
-    public override Vector3 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector3 CalculateMove(FlockAgent agent, List<Transform> agentContext, Flock flock)
     {
         //If no neighbors, return no adjustment
-        if(context.Count == 0)
+        if(agentContext.Count == 0)
         {
             return Vector3.zero;
         }
@@ -21,7 +21,7 @@ public class SteeredCohesion : FlockBehaviour
         float cohesionMoveX = 0f;
         float cohesionMoveZ = 0f;
 
-        foreach(Transform item in context)
+        foreach(Transform item in agentContext)
         {
             cohesionMoveX += item.position.x;
             cohesionMoveZ += item.position.z;
@@ -29,7 +29,7 @@ public class SteeredCohesion : FlockBehaviour
 
         cohesionMove = new Vector3(cohesionMoveX, 0, cohesionMoveZ);
 
-        cohesionMove /= context.Count;
+        cohesionMove /= agentContext.Count;
 
         //Create offset from agent position
         cohesionMove.x -= agent.transform.position.x;

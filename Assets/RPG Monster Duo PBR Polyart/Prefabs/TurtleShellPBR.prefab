@@ -780,10 +780,15 @@ GameObject:
   - component: {fileID: 4906828391645816}
   - component: {fileID: 95237074988894122}
   - component: {fileID: 2118223698}
+  - component: {fileID: 2118223705}
+  - component: {fileID: 2118223695}
   - component: {fileID: 2118223697}
   - component: {fileID: 2118223699}
   - component: {fileID: 2118223700}
-  m_Layer: 0
+  - component: {fileID: 1364544138}
+  - component: {fileID: 1364544139}
+  - component: {fileID: 2118223704}
+  m_Layer: 8
   m_Name: TurtleShellPBR
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -799,7 +804,7 @@ Transform:
   m_GameObject: {fileID: 1774625739149480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4968209632078062}
   - {fileID: 4148951095833812}
@@ -815,7 +820,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774625739149480}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0d3c605385d6d9547a1e3f24e8248962, type: 3}
   m_Controller: {fileID: 9100000, guid: 1b58d63f942126347865fbdde70e67c5, type: 2}
   m_CullingMode: 1
@@ -834,11 +839,49 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1774625739149480}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1.4041036}
   m_Center: {x: 0, y: 0.5, z: -0.027826946}
+--- !u!54 &2118223705
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!195 &2118223695
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.2
+  m_Speed: 10
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 1200
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &2118223697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -851,7 +894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48e023ebb7aa444b8d90d3e5fe47ecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamType: 1
+  teamType: 0
+  roleType: 0
   lane: 0
 --- !u!114 &2118223699
 MonoBehaviour:
@@ -865,12 +909,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c40845f735e92845b842c777603cc42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expToNextLvl: 0
+  expToNextLvl: 100
   exp: 0
-  expOnDeath: 0
+  expOnDeath: 20
   maxHealth: 50
   atkDmg: 2
   atkSpd: 0.8
+  shouldLvl: 1
 --- !u!114 &2118223700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -885,9 +930,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackType: 0
   targetedEnemy: {fileID: 0}
-  attackRange: 0
+  attackRange: 6
   basicAttackIdle: 0
   performMeleeAttack: 1
+--- !u!114 &1364544138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0baffe5ab6a0884dbadd273540e1b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateSpeedMovement: 0.1
+--- !u!114 &1364544139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb3221551cdc1642829e180401c6adb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 15
+  towers:
+  - {fileID: 0}
+  - {fileID: 0}
+  allyTowers: []
+  champs: []
+  minions: []
+  allys: []
+  groupSize: 3
+--- !u!114 &2118223704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c424a96a867ccb442b6d7e09a65a96f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 95237074988894122}
 --- !u!1 &1822049695589022
 GameObject:
   m_ObjectHideFlags: 0

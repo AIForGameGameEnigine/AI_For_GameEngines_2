@@ -9,6 +9,7 @@ TagManager:
   - Floor
   - AI
   - Minion
+  - Tower
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Targetable
   - 
   - 
   - 

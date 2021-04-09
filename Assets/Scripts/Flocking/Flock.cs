@@ -50,9 +50,9 @@ public class Flock : MonoBehaviour
     {
         foreach(FlockAgent agent in agents)
         {
-            List<Transform> context = GetNearbyObjects(agent);
+            List<Transform> agentContext = GetNearbyAgents(agent);
 
-            Vector3 move = behaviour.CalculateMove(agent, context, this);
+            Vector3 move = behaviour.CalculateMove(agent, agentContext, this);
             move *= driveFactor;
 
             if(move.sqrMagnitude > squareMaxSpeed)
@@ -64,14 +64,14 @@ public class Flock : MonoBehaviour
         }
     }
 
-    List<Transform> GetNearbyObjects(FlockAgent agent)
+    List<Transform> GetNearbyAgents(FlockAgent agent)
     {
         List<Transform> context = new List<Transform>();
         Collider[] contextColliders = Physics.OverlapSphere(agent.transform.position, neighborRadius);
 
         foreach(Collider c in contextColliders)
         {
-            if(c != agent.AgentCollider)
+            if(c != agent.AgentCollider && c.gameObject.tag == "Minion")
             {
                 context.Add(c.transform);
             }

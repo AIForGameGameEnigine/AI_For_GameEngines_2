@@ -26,29 +26,31 @@ public class Flock : MonoBehaviour
     float squareAvoidanceRadius;
     public float SquareAvoidanceRadius { get { return squareAvoidanceRadius; } }
 
+    public List<FlockAgent> Agents { get => agents; set => agents = value; }
+
     void Start()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighborRadius = neighborRadius * neighborRadius;
         squareAvoidanceRadius = squareNeighborRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
 
-        for (int i = 0; i < startingCount; i++) 
-        {
-            FlockAgent newAgent = Instantiate(
-                agentPrefab,
-                new Vector3(Random.insideUnitSphere.x * startingCount * AgentDensity, transform.position.y + 1, Random.insideUnitSphere.z * startingCount * AgentDensity),
-                Quaternion.Euler(0, Random.Range(0f, 360f), 0),
-                transform
-            );
+        //for (int i = 0; i < startingCount; i++) 
+        //{
+        //    FlockAgent newAgent = Instantiate(
+        //        agentPrefab,
+        //        new Vector3(Random.insideUnitSphere.x * startingCount * AgentDensity, transform.position.y + 1, Random.insideUnitSphere.z * startingCount * AgentDensity),
+        //        Quaternion.Euler(0, Random.Range(0f, 360f), 0),
+        //        transform
+        //    );
 
-            newAgent.name = "Agent" + i;
-            agents.Add(newAgent);
-        }
+        //    newAgent.name = "Agent" + i;
+        //    Agents.Add(newAgent);
+        //}
     }
 
     void Update()
     {
-        foreach(FlockAgent agent in agents)
+        foreach(FlockAgent agent in Agents)
         {
             List<Transform> agentContext = GetNearbyAgents(agent);
 
@@ -71,7 +73,7 @@ public class Flock : MonoBehaviour
 
         foreach(Collider c in contextColliders)
         {
-            if(c != agent.AgentCollider && c.gameObject.tag == "Minion")
+            if(c != agent.AgentCollider && c.gameObject.tag == "Enemy")
             {
                 context.Add(c.transform);
             }

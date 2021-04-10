@@ -37,10 +37,6 @@ public class MinionSpawner : MonoBehaviour
             newMinion.GetComponent<Role>().teamType = role.teamType;
             newMinion.GetComponent<Role>().roleType = Role.RoleType.Minion;
             newMinion.GetComponent<Role>().lane = lane;
-
-            Flock flock = GetComponent<Flock>();
-
-            flock.Agents.Add(newMinion.GetComponent<FlockAgent>());
         }
     }
 }

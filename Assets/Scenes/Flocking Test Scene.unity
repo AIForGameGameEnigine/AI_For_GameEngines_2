@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 1285009882}
   m_Layer: 0
   m_Name: Flock
-  m_TagString: Untagged
+  m_TagString: Minion
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -512,13 +512,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4220f573f36fa06439b737a6e536f4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agentPrefab: {fileID: -8292109039600692340, guid: a3ae403559eed644e8973e30fe021f3d,
+  agentPrefab: {fileID: 6484956097172277435, guid: 38efdaadbfe1d624bbee439cb02e7661,
     type: 3}
   behaviour: {fileID: 11400000, guid: fc8ed751a3dd03c4a8d4b15a637cab23, type: 2}
   startingCount: 25
   driveFactor: 10
   maxSpeed: 3
-  neighborRadius: 3
+  neighborRadius: 2
   avoidanceRadiusMultiplier: 1
 --- !u!4 &1285009883
 Transform:

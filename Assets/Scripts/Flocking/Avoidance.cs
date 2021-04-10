@@ -8,18 +8,17 @@ public class Avoidance : FlockBehaviour
 {
     public override Vector3 CalculateMove(FlockAgent agent, List<Transform> agentContext, Flock flock)
     {
-        //If no neighbors, return no adjustment
-        if(agentContext.Count == 0)
-        {
-            return Vector3.zero;
-        }
-
-        //Add all points together and average
         Vector3 avoidanceMove = Vector3.zero;
         float avoidanceMoveX = 0f;
         float avoidanceMoveZ = 0f;
-
         int nAvoid = 0;
+
+        //If no neighbors check if too close to navmesh
+        if(agentContext.Count == 0)
+        {
+            avoidanceMove = avoidNavmesh(agent, avoidanceMove, avoidanceMoveX, avoidanceMoveZ);
+            return avoidanceMove;
+        }
 
         //Check distance between agents
         foreach(Transform item in agentContext)
@@ -32,25 +31,36 @@ public class Avoidance : FlockBehaviour
             }
         }
 
+        avoidanceMove = new Vector3(avoidanceMoveX, 0, avoidanceMoveZ);
+
+        //Override the move if too close to edge of navmesh
+        avoidanceMove = avoidNavmesh(agent, avoidanceMove, avoidanceMoveX, avoidanceMoveZ);
+
+        //Calculate the average
+        if(nAvoid > 0) {
+            avoidanceMove /= nAvoid;
+        }
+
+        return avoidanceMove;
+    }
+
+    Vector3 avoidNavmesh(FlockAgent agent, Vector3 avoidanceMove, float avoidanceMoveX, float avoidanceMoveZ) 
+    {
         NavMeshHit hit;
+
         if(NavMesh.FindClosestEdge(agent.transform.position, out hit, NavMesh.AllAreas))
         {
             float dist = Vector3.Distance(agent.transform.position, hit.position);
             Debug.DrawRay(hit.position, Vector3.up, Color.red);
 
-            if(dist < 1.0f)
+            if(dist < 2.0f)
             {
-                nAvoid++;
-                avoidanceMoveX += (agent.transform.position.x - hit.position.x);
-                avoidanceMoveZ += (agent.transform.position.z - hit.position.z);
+                avoidanceMoveX = (agent.transform.position.x - hit.position.x);
+                avoidanceMoveZ = (agent.transform.position.z - hit.position.z);
             }
         }
 
         avoidanceMove = new Vector3(avoidanceMoveX, 0, avoidanceMoveZ);
-
-        if(nAvoid > 0) {
-            avoidanceMove /= nAvoid;
-        }
 
         return avoidanceMove;
     }

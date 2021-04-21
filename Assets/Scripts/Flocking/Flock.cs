@@ -73,7 +73,7 @@ public class Flock : MonoBehaviour
 
         foreach(Collider c in contextColliders)
         {
-            if(c != agent.AgentCollider && c.gameObject.tag == "Minion")
+            if(c != agent.AgentCollider && (c.gameObject.tag == "Minion" || c.gameObject.tag == "Obstacle"))
             {
                 context.Add(c.transform);
             }

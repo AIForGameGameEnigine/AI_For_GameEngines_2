@@ -55,7 +55,7 @@ public class Avoidance : FilteredFlockBehaviour
             float dist = Vector3.Distance(agent.transform.position, hit.position);
             Debug.DrawRay(hit.position, Vector3.up, Color.red);
 
-            if(dist < 2.0f)
+            if(dist < 2.5f)
             {
                 avoidanceMoveX = (agent.transform.position.x - hit.position.x);
                 avoidanceMoveZ = (agent.transform.position.z - hit.position.z);

@@ -43,6 +43,7 @@ public class Flock : MonoBehaviour
            );
 
            newAgent.name = "Agent" + i;
+           newAgent.Initialize(this);
            Agents.Add(newAgent);
         }
     }

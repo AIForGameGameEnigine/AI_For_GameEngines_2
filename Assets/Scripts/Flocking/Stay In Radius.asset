@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b23aaee691a4ad945bdc7556acc6e66e, type: 3}
-  m_Name: Avoidance
+  m_Script: {fileID: 11500000, guid: f03bf3996d0d50940934c67a5b4299a7, type: 3}
+  m_Name: Stay In Radius
   m_EditorClassIdentifier: 
-  filter: {fileID: 11400000, guid: 7adb3dc6c42cc9640bea0bf33aaac2b3, type: 2}
+  radius: 10

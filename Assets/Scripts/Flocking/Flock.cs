@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,18 +34,18 @@ public class Flock : MonoBehaviour
         squareNeighborRadius = neighborRadius * neighborRadius;
         squareAvoidanceRadius = squareNeighborRadius * avoidanceRadiusMultiplier * avoidanceRadiusMultiplier;
 
-        //for (int i = 0; i < startingCount; i++) 
-        //{
-        //    FlockAgent newAgent = Instantiate(
-        //        agentPrefab,
-        //        new Vector3(Random.insideUnitSphere.x * startingCount * AgentDensity, transform.position.y + 1, Random.insideUnitSphere.z * startingCount * AgentDensity),
-        //        Quaternion.Euler(0, Random.Range(0f, 360f), 0),
-        //        transform
-        //    );
+        for (int i = 0; i < startingCount; i++) 
+        {
+           FlockAgent newAgent = Instantiate(
+               agentPrefab,
+               new Vector3(transform.position.x, transform.position.y, transform.position.z),
+               Quaternion.Euler(0, Random.Range(0f, 360f), 0)
+           );
 
-        //    newAgent.name = "Agent" + i;
-        //    Agents.Add(newAgent);
-        //}
+           newAgent.name = "Agent" + i;
+           newAgent.Initialize(this);
+           Agents.Add(newAgent);
+        }
     }
 
     void Update()
@@ -73,7 +73,7 @@ public class Flock : MonoBehaviour
 
         foreach(Collider c in contextColliders)
         {
-            if(c != agent.AgentCollider && c.gameObject.tag == "Enemy")
+            if(c != agent.AgentCollider && (c.gameObject.tag == "Minion" || c.gameObject.tag == "Obstacle"))
             {
                 context.Add(c.transform);
             }

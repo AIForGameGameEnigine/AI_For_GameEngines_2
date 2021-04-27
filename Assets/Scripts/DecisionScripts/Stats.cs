@@ -15,6 +15,8 @@ public class Stats : MonoBehaviour
     private float atkTime = 1.4f;
     public bool shouldLvl;
 
+    public Transform respawnPoint;
+
     Combat combatScript;
 
     public float Health { get => health; set => health = value >= maxHealth ? maxHealth : value; }
@@ -40,11 +42,34 @@ public class Stats : MonoBehaviour
 
         if(health <= 0)
         {
-            combatScript.targetedEnemy = null;
-            combatScript.performMeleeAttack = false;
-            combatScript.IsAlive = false;
-            Destroy(gameObject);
+            if(GetComponent<Role>().roleType == Role.RoleType.Champion)
+            {
+                combatScript.targetedEnemy = null;
+                combatScript.performMeleeAttack = false;
+                combatScript.IsAlive = false;
+                gameObject.SetActive(false);
+                transform.position = respawnPoint.position;
+                Invoke("Respawn", 5);
+            }
+            else
+            {
+                combatScript.targetedEnemy = null;
+                combatScript.performMeleeAttack = false;
+                combatScript.IsAlive = false;
+                Destroy(gameObject);
+            }
+
+           
         }
+    }
+
+    void Respawn()
+    {
+        health = maxHealth;
+        combatScript.targetedEnemy = null;
+        combatScript.performMeleeAttack = true;
+        combatScript.IsAlive = true;
+        gameObject.SetActive(true);
     }
 
     private void LevelUp()

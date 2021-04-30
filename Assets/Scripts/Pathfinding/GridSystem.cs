@@ -113,35 +113,21 @@ public class GridSystem : MonoBehaviour
 
         return nodeArray[x, y];
     }
-
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-
         if (nodeArray != null)
         {
             foreach (GridNode n in nodeArray)
             {
-                if (n.isWall)
-                {
-                    Gizmos.color = Color.white;
-                }
-                else
-                {
-                    Gizmos.color = Color.green;
-                }
-
-
                 if (finalPath != null)
                 {
                     if (finalPath.Contains(n))
                     {
-                        Gizmos.color = Color.red;
+                        Gizmos.color = Color.cyan;
+                        Gizmos.DrawCube(n.pos, (Vector3.one * (nodeDiameter - nodeDistance)) / 5);
                     }
 
                 }
-
-                Gizmos.DrawCube(n.pos, Vector3.one * (nodeDiameter - nodeDistance));
             }
         }
     }

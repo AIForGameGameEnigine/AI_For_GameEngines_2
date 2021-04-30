@@ -14,11 +14,11 @@ public class Pathfinder : MonoBehaviour
     private void Awake()
     {
         GS = GetComponent<GridSystem>();
-        FindPath(startPosition.position, endPosition.position);
     }
 
     private void Update()
     {
+        FindPath(startPosition.position, endPosition.position);
     }
 
     void FindPath(Vector3 startPos, Vector3 endPos)
